@@ -6,7 +6,22 @@ import generateToken from "../utils/generateToken.js";
 // route    POST /api/users/auth
 // @access Public
 const authUser = asyncHandler(async (request, response) => {
-  response.status(200).json({ message: "Auth user" });
+  const { email, password } = request.body;
+
+  const user = await User.findOne({ email });
+
+  if (user && (await user.matchPassword(password))) {
+    generateToken(response, user._id);
+    response.status(201).json({
+      _id: user._id,
+      name: user.name,
+      email: user.email,
+    });
+  } else {
+    console.log(user);
+    response.status(401);
+    throw new Error("👀");
+  }
 });
 
 // @desc   Register a new user
@@ -45,7 +60,11 @@ const registerUser = asyncHandler(async (request, response) => {
 // route    POST /api/users/logout
 // @access Public
 const logOut = asyncHandler(async (request, response) => {
-  response.status(200).json({ message: "logout user" });
+  response.cookie("jwt", "", {
+    httpOnly: true,
+    expires: new Date(0),
+  });
+  response.status(200).json({ message: "👋 later" });
 });
 
 // @desc    get user profile
