@@ -2,23 +2,35 @@ import { SignInRequest, UserDetails } from "../definitions/Users";
 
 const usersUrl = "/api/users";
 
-export const signIn = (data: SignInRequest) => {
-  fetch(`${usersUrl}/auth`, {
+export const signIn = async (data: SignInRequest) => {
+  const response = await fetch(`api/users/auth`, {
     method: "POST",
     headers: {
       "Content-Type": "application/json",
     },
     body: JSON.stringify(data),
   });
+
+  try {
+    return response;
+  } catch (error: error) {
+    alert(`${error.data.message || error.error} oopsies`);
+  }
 };
 
-export const signOut = () => {
-  fetch(`${usersUrl}/logout`, {
+export const signOut = async () => {
+  const response = await fetch(`${usersUrl}/logout`, {
     method: "POST",
     headers: {
       "Content-Type": "application/json",
     },
   });
+
+  try {
+    return response;
+  } catch (error: any) {
+    alert(`${error.data.message || error.error} oopsies`);
+  }
 };
 
 export const editUser = (data: UserDetails) => {

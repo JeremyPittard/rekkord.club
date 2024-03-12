@@ -1,6 +1,17 @@
 import { Link } from "@tanstack/react-router";
+import { useStore } from "@tanstack/react-store";
+import userStore from "../../store/userStore";
+import { useLogout } from "../../hooks/useUser";
 
 const Navbar = () => {
+  const user = useStore(userStore, (store) => store);
+
+  const logOut = useLogout();
+
+  const handleLogOut = () => {
+    logOut.mutateAsync();
+  };
+  console.log(user, "stored user");
   return (
     <>
       <header>
@@ -27,7 +38,9 @@ const Navbar = () => {
             </Link>
           </li>
           <li>
-            <button type="button">Sign out</button>
+            <button type="button" onClick={handleLogOut}>
+              Sign out
+            </button>
           </li>
         </ul>
       </header>
