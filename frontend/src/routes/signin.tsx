@@ -2,12 +2,15 @@ import { createFileRoute } from "@tanstack/react-router";
 import { useState } from "react";
 import { SignInRequest } from "../definitions/Users";
 import { useLogin } from "../hooks/useUser";
+import { useNavigate } from "@tanstack/react-router";
 
 export const Route = createFileRoute("/signin")({
   component: SignInPage,
 });
 
 function SignInPage() {
+  const navigate = useNavigate();
+
   const [details, setDetails] = useState<SignInRequest>({
     email: "",
     password: "",
@@ -23,10 +26,9 @@ function SignInPage() {
     }));
   };
 
-  const handleSignIn = (event: React.FormEvent<HTMLFormElement>) => {
+  const handleSignIn = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
-    loginMutation.mutateAsync(details);
-    console.log(details);
+    loginMutation.mutateAsync(details).then(() => navigate({ to: "/" }));
   };
 
   return (

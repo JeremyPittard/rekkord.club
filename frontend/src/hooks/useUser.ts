@@ -22,6 +22,7 @@ export const useLogout = () => {
     mutationFn: () => signOut(),
     onSuccess: () =>
       userStore.setState(() => {
+        console.log(userStore.state);
         return { _id: "", name: "", email: "" };
       }),
   });

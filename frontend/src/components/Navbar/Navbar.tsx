@@ -37,11 +37,13 @@ const Navbar = () => {
               About
             </Link>
           </li>
-          <li>
-            <button type="button" onClick={handleLogOut}>
-              Sign out
-            </button>
-          </li>
+          {user._id ? (
+            <li>
+              <button type="button" onClick={handleLogOut}>
+                Sign out
+              </button>
+            </li>
+          ) : null}
         </ul>
       </header>
       <hr />

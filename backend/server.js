@@ -1,6 +1,7 @@
 import express from "express";
 import dotenv from "dotenv";
 import userRoutes from "./routes/userRoutes.js";
+import clubRoutes from "./routes/clubRoutes.js";
 import connectDB from "./config/db.js";
 
 dotenv.config();
@@ -21,6 +22,7 @@ app.use(express.urlencoded({ extended: true }));
 app.use(cookieParser());
 
 app.use("/api/users", userRoutes);
+app.use("/api/clubs", clubRoutes);
 
 app.get("/", (request, response) => response.send("server is up and about"));
 
